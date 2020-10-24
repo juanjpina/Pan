@@ -1,0 +1,369 @@
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import javax.swing.border.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+
+
+/**
+ * Write a description of class Frame here.
+ * 
+ * @author (your name) 
+ * @version (a version number or a date)
+ */
+public class Image  implements ActionListener
+{
+    List list;// = new List();
+    private JFrame frame, resultad;
+    private JPanel panelS, panelC, panelx;
+    private JTextField cantidad;
+    private JSlider h2o, barra;
+    private JButton smallerButton;
+    private JButton largerButton;
+    private JLabel sp,tH2o, pMm,pan ,harina, agua, sal,mm, harinaT, aguaT, salT, mmT;
+    public int lk,Imm,can;
+    public int resultado, Iharina, Iagua, Isal;
+    private String numCadena;
+    /**
+     * Constructor for objects of class Frame
+     */
+    public Image()
+    {
+        list = new List();
+        makeFrame();
+        
+    }
+    
+    /**
+     * Action listener 
+     */
+    public void actionPerformed(ActionEvent event)
+    {
+        System.out.println("Menu Item" + event.getActionCommand());
+    }
+    
+    // private class EventoSlider implements ChangeListener
+    // {
+        // public void stateChanged(ChangeEvent e)
+        // {
+            
+            // lk = barra.getValue();
+            // // System.out.println(barra.getValue());
+            // Imm = list.calculoMm(1000,lk , 65);
+            // //String Smm = Integer.toString(Imm);
+            // //mmT = new JLabel(Smm + " gr");
+
+               // // String Smm = Integer.toString(Imm);
+        // }  
+    // }
+    
+    
+    /**
+     * metodo que devuel el valor de la proporcion de masa madre
+     */
+    public int ejem(){
+        
+         int a=barra.getValue();
+         return a; 
+    }
+    
+    
+    public void ejem2(){
+        
+         System.out.println(cantidad.getText());
+        
+         Iharina = list.calculoHarina(1000);
+         Iagua = list.calculoAgua(1000, 65);
+         Isal = list.calculoSal(1000);
+         
+         //System.out.println(Iharina);
+    }
+    
+    /***
+     * devuelve el valor del agua
+     */
+    public int ejem3()
+    {
+        int b=h2o.getValue();
+        return b;
+        
+    }
+    
+    public int getNumero()
+    {
+        String t1 ="";
+        
+        while(t1.equals(""))
+        {
+            System.out.println();
+            t1 = cantidad.getText();
+            if(!t1.matches("[0-9]*"))
+            {
+                t1="";
+            }
+        }
+        
+        return Integer.parseInt(t1);
+    }
+    
+    /**
+     * comprobar si es entero
+     */
+    public static boolean isNumeric(String cadena) {
+
+        boolean resultado;
+
+        try {
+            Integer.parseInt(cadena);
+            resultado = true;
+        } catch (NumberFormatException excepcion) {
+            resultado = false;
+        }
+
+        return resultado;
+    }
+    
+    /**
+     * metodo que abre un nuevo frame con el resultado del caluclo
+     * lo llama el boton calculo.
+     */
+    public void resul()
+    {
+               //String cadena = "500";
+        
+               numCadena= cantidad.getText();
+               int numero;
+
+        if (isNumeric(numCadena) == true) {
+            numero = Integer.parseInt(numCadena);
+            System.out.println("Numero: " + numero);
+        } else {
+            System.out.println("No es un numero");
+        }
+                
+                
+                int tH=getNumero();
+                
+                 tH= Integer.parseInt(numCadena);
+        
+        
+                Color myColor = new Color(51,153,204);
+                resultad = new JFrame("Cantidades finales");
+                resultad.setSize(100,100);
+                resultad.setLocation(1000,500);
+                
+                BorderLayout layout = new BorderLayout();
+                Border border = BorderFactory.createLineBorder(myColor, 15);
+
+               // layout.setHgap(100);
+                //layout.setVgap(105);
+                panelx = new JPanel();
+                panelx.setLayout(layout);
+               
+                panelx.setBorder(border);
+                resultad.setBackground(myColor);
+                resultad.add(panelx,BorderLayout.NORTH);
+                
+                GridLayout gridLayout = new GridLayout(7,2,0,0);
+                panelx = new JPanel();
+                panelx.setLayout(gridLayout);
+                panelx.setBackground(myColor);
+                gridLayout.setVgap(10);
+                gridLayout.setHgap(10);
+                
+                
+                
+                Iharina = list.calculoHarina(tH);
+                Iagua = list.calculoAgua(tH, ejem3());
+                Isal = list.calculoSal(tH);
+                Imm = list.calculoMm(tH,ejem(), ejem3());
+                
+               
+                String Sharina = Integer.toString(Iharina);
+                String Sagua = Integer.toString(Iagua);
+                String Ssal = Integer.toString(Isal);
+                String Smm = Integer.toString(Imm);
+            
+           
+                pMm = new JLabel("Porcentaje masa madre");
+                pan = new JLabel("  Pan"); 
+                harina = new JLabel("  Harina");
+                agua = new JLabel("  Agua");
+                sal = new JLabel("  Sal");
+                mm = new JLabel("  Masa Madre");
+            
+            
+            
+                harinaT = new JLabel(Sharina + " gr");
+                aguaT = new JLabel(Sagua + " gr");
+                salT = new JLabel(Ssal + " gr");
+                mmT = new JLabel(Smm + " gr");
+                harinaT.setHorizontalAlignment(SwingConstants.RIGHT);
+                mmT.setHorizontalAlignment(SwingConstants.RIGHT);
+                aguaT.setHorizontalAlignment(SwingConstants.RIGHT);
+                salT.setHorizontalAlignment(SwingConstants.RIGHT);
+                Font fuente = new Font("Lucida Console",Font.BOLD,20);
+                pMm.setFont(fuente);
+                harina.setFont(fuente);
+                agua.setFont(fuente);
+                sal.setFont(fuente);
+                mm.setFont(fuente);
+                harinaT.setFont(fuente);
+                aguaT.setFont(fuente);
+                salT.setFont(fuente);
+                mmT.setFont(fuente);
+            
+            
+            
+       
+            //panelx.add(pMm);
+                panelx.add(harina);
+                panelx.add(harinaT);
+                panelx.add(agua);
+                panelx.add(aguaT);
+                panelx.add(sal);
+                panelx.add(salT);
+                panelx.add(mm);
+                panelx.add(mmT);
+               
+                resultad.add(panelx,BorderLayout.CENTER);  
+                    
+                
+                resultad.pack();
+                resultad.setVisible(true);
+        
+    }
+    
+    /**
+     * An example of a method - replace this comment with your own
+     * 
+     * @param  y   a sample parameter for a method
+     * @return     the sum of x and y 
+     */
+    public void makeFrame()
+    {
+        frame = new JFrame("Calculadora masa de panadero ");
+        frame.setSize(1800,1800);
+        frame.setLocation(400,500);
+      //  menu(frame);
+            Color myColor = new Color(51,153,204);
+             
+      
+      
+            BorderLayout layout = new BorderLayout();
+            //layout.setHgap(100);
+            layout.setVgap(15);
+            panelS = new JPanel();
+            panelS.setLayout( layout);
+            panelS.setBackground(myColor); 
+           
+          //boton calcula  
+            JButton p = new JButton("Calcula");        
+            
+            panelS.add(p,BorderLayout.NORTH);
+            p.addActionListener(e->resul());
+              
+            frame.add(panelS,BorderLayout.NORTH);      
+            panelC = new JPanel();
+            panelC.setLayout(new GridLayout(4,2,10,10));
+            panelC.setBackground(myColor);
+            sp = new JLabel("   ");
+          //barra desplazamiento
+            
+            barra = new JSlider(25,50,40);
+            barra.setMajorTickSpacing(5);
+            barra.setFont(new Font("Serif",Font.BOLD,15));
+            barra.setSnapToTicks(true);
+            barra.setPaintTicks(true);
+            barra.setPaintLabels(true);
+            barra.setBackground(myColor);
+            barra.addChangeListener(e->ejem());
+            
+            
+            h2o = new JSlider(50,80,65);
+            h2o.setMajorTickSpacing(5);
+            h2o.setFont(new Font("Serif", Font.BOLD,15));
+            h2o.setSnapToTicks(true);
+            h2o.setPaintTicks(true);
+            h2o.setPaintLabels(true);
+            h2o.setBackground(myColor);
+            h2o.addChangeListener(e->ejem3());
+          
+          //pasar de int a string los metodos de calculo------------------------------- 
+           cantidad = new JTextField(4);
+           cantidad.setFont(new Font("Serif",Font.BOLD,25));
+           
+            pMm = new JLabel("  Porcentaje masa madre");
+            pan = new JLabel("  Pan"); 
+            tH2o = new JLabel("  Porcentaje de Agua");
+            pMm.setFont(new Font("Serif",Font.BOLD,20));
+            pan.setFont(new Font("Serif",Font.BOLD,20));
+            tH2o.setFont(new Font("Serif",Font.BOLD,20));
+            
+            
+            
+            
+            
+            panelC.add(pMm);
+            panelC.add(barra);
+           
+            
+            panelC.add(tH2o);
+            panelC.add(h2o);
+            
+            panelC.add(pan);
+            panelC.add(cantidad);
+        
+            frame.add(panelC,BorderLayout.CENTER);  
+        
+        
+        
+        
+        frame.pack();
+        frame.setVisible(true);
+        
+    }
+   
+    
+    
+    /**
+     * Creacion de un menu de texto
+     */
+    public void menu(JFrame frame)
+    {
+        JMenuBar menuBar = new JMenuBar();
+        frame.setJMenuBar(menuBar);
+        
+        //menu file
+        JMenu fileMenu = new JMenu("File");
+        menuBar.add(fileMenu);
+        
+        JMenuItem openItem = new JMenuItem("Open");
+        openItem.addActionListener(e -> openFile());
+        fileMenu.add(openItem);
+        
+        JMenuItem quitItem = new JMenuItem("Quit");
+        quitItem.addActionListener(e -> quit());
+        fileMenu.add(quitItem);
+        
+    }
+    
+    
+    private void openFile()
+    {
+        // this is some test output, until we do this properly
+        System.out.println("open file");
+    }
+    
+    private void quit()
+    {
+        System.exit(0);
+    }
+    
+   
+   
+}
